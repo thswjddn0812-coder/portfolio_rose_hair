@@ -25,12 +25,12 @@ export default function Home() {
   const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0);
 
   const galleryImages = [
-    "/그록모델1.jpg",
-    "/그록모델2.jpg",
-    "/그록모델3.jpg",
-    "/그록모델4.jpg",
-    "/그록모델5.jpg",
-    "/그록모델6.jpg",
+    "/model1.jpg",
+    "/model2.jpg",
+    "/model3.jpg",
+    "/model4.jpg",
+    "/model5.jpg",
+    "/model6.jpg",
   ];
 
   const heroPanels = [
@@ -64,7 +64,7 @@ export default function Home() {
     },
     {
       index: 2,
-      imageSrc: "/1대1 가격표.jpg",
+      imageSrc: "/menus.jpg",
       imageAlt: "미용실 가격",
       icon: DollarSign,
       title: "가격",

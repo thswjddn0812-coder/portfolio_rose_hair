@@ -36,7 +36,7 @@ export default function Home() {
   const heroPanels = [
     {
       index: 0,
-      imageSrc: "/미용실 위치 세 번째.png",
+      imageSrc: "/placeHairSalon.png",
       imageAlt: "미용실 위치",
       icon: MapPin,
       title: "위치",
@@ -50,7 +50,7 @@ export default function Home() {
     },
     {
       index: 1,
-      imageSrc: "/그록여성머리2.jpg",
+      imageSrc: "/gallery.jpg",
       imageAlt: "미용실 갤러리",
       icon: Scissors,
       title: "사진",
@@ -78,7 +78,7 @@ export default function Home() {
     },
     {
       index: 3,
-      imageSrc: "/고객후기.png",
+      imageSrc: "/reviews.png",
       imageAlt: "미용실 후기",
       icon: MessageSquare,
       title: "후기",

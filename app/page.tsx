@@ -36,7 +36,7 @@ export default function Home() {
   const heroPanels = [
     {
       index: 0,
-      imageSrc: "/placeHairSalon.png",
+      imageSrc: "/placehairsalon2.png",
       imageAlt: "미용실 위치",
       icon: MapPin,
       title: "위치",
@@ -50,7 +50,7 @@ export default function Home() {
     },
     {
       index: 1,
-      imageSrc: "/gallery.jpg",
+      imageSrc: "/gallery2.png",
       imageAlt: "미용실 갤러리",
       icon: Scissors,
       title: "사진",
@@ -64,7 +64,7 @@ export default function Home() {
     },
     {
       index: 2,
-      imageSrc: "/menus.jpg",
+      imageSrc: "/menus2.png",
       imageAlt: "미용실 가격",
       icon: DollarSign,
       title: "가격",
@@ -154,6 +154,123 @@ export default function Home() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  useEffect(() => {
+    const sections = ["hero", "location", "gallery", "pricing", "reviews"];
+    let isScrolling = false;
+    let scrollAccumulator = 0;
+    const scrollThreshold = 50; // 스크롤 임계값
+    let scrollTimeout: NodeJS.Timeout;
+
+    const getCurrentSectionIndex = () => {
+      const currentScroll = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const sections = document.querySelectorAll("section, #hero");
+
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i] as HTMLElement;
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+
+        if (
+          currentScroll >= sectionTop - windowHeight / 2 &&
+          currentScroll < sectionBottom - windowHeight / 2
+        ) {
+          return i;
+        }
+      }
+      return 0;
+    };
+
+    const scrollToSection = (index: number) => {
+      const targetSection = sections[index];
+      let targetElement: HTMLElement | null = null;
+
+      if (targetSection === "hero") {
+        targetElement = document.getElementById("hero");
+      } else {
+        targetElement = document.getElementById(targetSection);
+      }
+
+      if (targetElement) {
+        isScrolling = true;
+        const targetPosition = targetElement.offsetTop;
+        const startPosition = window.scrollY;
+        const distance = targetPosition - startPosition;
+        const duration = Math.min(Math.abs(distance) * 0.8, 1000); // 최대 1초
+        const startTime = performance.now();
+
+        const easeInOutCubic = (t: number): number => {
+          return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        };
+
+        const animateScroll = (currentTime: number) => {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easedProgress = easeInOutCubic(progress);
+
+          window.scrollTo(0, startPosition + distance * easedProgress);
+
+          if (progress < 1) {
+            requestAnimationFrame(animateScroll);
+          } else {
+            isScrolling = false;
+            scrollAccumulator = 0;
+          }
+        };
+
+        requestAnimationFrame(animateScroll);
+
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          isScrolling = false;
+          scrollAccumulator = 0;
+        }, duration + 100);
+      }
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (isScrolling) {
+        e.preventDefault();
+        return;
+      }
+
+      // 스크롤 양 누적
+      scrollAccumulator += Math.abs(e.deltaY);
+
+      // 임계값 이상 스크롤했을 때만 섹션 이동
+      if (scrollAccumulator >= scrollThreshold) {
+        e.preventDefault();
+
+        const currentSectionIndex = getCurrentSectionIndex();
+        let nextSectionIndex = currentSectionIndex;
+
+        if (e.deltaY > 0) {
+          // 아래로 스크롤
+          nextSectionIndex = Math.min(
+            currentSectionIndex + 1,
+            sections.length - 1
+          );
+        } else {
+          // 위로 스크롤
+          nextSectionIndex = Math.max(currentSectionIndex - 1, 0);
+        }
+
+        // 같은 섹션이면 이동하지 않음
+        if (nextSectionIndex !== currentSectionIndex) {
+          scrollAccumulator = 0;
+          scrollToSection(nextSectionIndex);
+        }
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -183,7 +300,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* 히어로 섹션 - 4개의 인터랙티브 패널 */}
-      <div className="h-screen flex flex-col md:flex-row overflow-hidden">
+      <div
+        className="h-screen flex flex-col md:flex-row overflow-hidden"
+        id="hero"
+      >
         {heroPanels.map((panel) => (
           <HeroPanel
             key={panel.index}

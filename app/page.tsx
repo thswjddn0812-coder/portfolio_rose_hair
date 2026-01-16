@@ -18,6 +18,7 @@ import GallerySlider from "./components/GallerySlider";
 import ReviewChip from "./components/ReviewChip";
 import ReviewCard from "./components/ReviewCard";
 import InfoItem from "./components/InfoItem";
+import NavigationBar from "./components/NavigationBar";
 
 export default function Home() {
   const [hoveredSection, setHoveredSection] = useState<number | null>(null);
@@ -299,6 +300,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* 네비게이션 바 */}
+      <NavigationBar onNavigate={scrollToSection} />
+
       {/* 히어로 섹션 - 4개의 인터랙티브 패널 */}
       <div
         className="h-screen flex flex-col md:flex-row overflow-hidden"
@@ -329,7 +333,7 @@ export default function Home() {
       </div>
 
       {/* 위치 섹션 */}
-      <section id="location" className="min-h-screen py-20 px-8 bg-white">
+      <section id="location" className="min-h-screen py-20 px-8 bg-white pt-24">
         <div className="max-w-7xl mx-auto">
           <SectionHeader title="위치 및 정보" />
 
@@ -388,7 +392,10 @@ export default function Home() {
       </section>
 
       {/* 갤러리 섹션 */}
-      <section id="gallery" className="min-h-screen py-20 px-8 bg-zinc-50">
+      <section
+        id="gallery"
+        className="min-h-screen py-20 px-8 bg-zinc-50 pt-24"
+      >
         <div className="max-w-7xl mx-auto">
           <SectionHeader title="사진" />
 
@@ -416,7 +423,7 @@ export default function Home() {
       </section>
 
       {/* 가격 섹션 */}
-      <section id="pricing" className="min-h-screen py-20 px-8 bg-white">
+      <section id="pricing" className="min-h-screen py-20 px-8 bg-white pt-24">
         <div className="max-w-5xl mx-auto">
           <SectionHeader title="가격 안내" />
 
@@ -445,7 +452,10 @@ export default function Home() {
       </section>
 
       {/* 후기 섹션 */}
-      <section id="reviews" className="min-h-screen py-20 px-8 bg-zinc-50">
+      <section
+        id="reviews"
+        className="min-h-screen py-20 px-8 bg-zinc-50 pt-24"
+      >
         <div className="max-w-7xl mx-auto">
           <SectionHeader title="고객 후기" />
 

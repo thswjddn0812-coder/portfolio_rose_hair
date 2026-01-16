@@ -264,10 +264,61 @@ export default function Home() {
       }
     };
 
+    // 터치 제스처 (모바일)
+    let touchStartY = 0;
+    let touchEndY = 0;
+    const minSwipeDistance = 50; // 최소 스와이프 거리
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (isScrolling) return;
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (isScrolling) {
+        e.preventDefault();
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (isScrolling) return;
+
+      touchEndY = e.changedTouches[0].clientY;
+      const swipeDistance = touchStartY - touchEndY;
+
+      // 최소 스와이프 거리 확인
+      if (Math.abs(swipeDistance) < minSwipeDistance) return;
+
+      const currentSectionIndex = getCurrentSectionIndex();
+      let nextSectionIndex = currentSectionIndex;
+
+      if (swipeDistance > 0) {
+        // 위로 스와이프 (다음 섹션)
+        nextSectionIndex = Math.min(
+          currentSectionIndex + 1,
+          sections.length - 1
+        );
+      } else {
+        // 아래로 스와이프 (이전 섹션)
+        nextSectionIndex = Math.max(currentSectionIndex - 1, 0);
+      }
+
+      // 같은 섹션이면 이동하지 않음
+      if (nextSectionIndex !== currentSectionIndex) {
+        scrollToSection(nextSectionIndex);
+      }
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
       clearTimeout(scrollTimeout);
     };
   }, []);

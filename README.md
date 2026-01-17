@@ -1,36 +1,177 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌹 장미 미용실 (Rose Hair Salon)
 
-## Getting Started
+장미 미용실의 공식 웹사이트입니다. 프리미엄 헤어 서비스를 소개하고 고객들이 위치, 가격, 갤러리, 후기 등을 쉽게 확인할 수 있도록 제공하는 모던한 반응형 웹 애플리케이션입니다.
 
-First, run the development server:
+## 📋 프로젝트 소개
+
+장미 미용실은 경기도 성남시 분당구에 위치한 미용실로, 고객에게 최상의 헤어 서비스를 제공합니다. 이 웹사이트는 Next.js 기반으로 구축되어 있으며, 인터랙티브한 UI와 부드러운 애니메이션을 통해 사용자 경험을 향상시킵니다.
+
+## 🛠️ 기술 스택
+
+- **프레임워크**: Next.js 15.5.2 (App Router)
+- **언어**: TypeScript 5
+- **UI 라이브러리**: React 19.2.3
+- **스타일링**: Tailwind CSS 4
+- **애니메이션**: Framer Motion 11.0.0
+- **아이콘**: Lucide React 0.400.0
+- **지도**: 네이버 지도 API
+
+## ✨ 주요 기능
+
+### 1. 히어로 섹션
+- 4개의 인터랙티브 패널 (위치, 사진, 가격, 후기)
+- 호버 효과 및 부드러운 전환 애니메이션
+- 반응형 디자인 (모바일/데스크톱)
+
+### 2. 위치 및 정보
+- 네이버 지도 통합
+- 상세한 주소 및 연락처 정보
+- 영업시간 안내
+- 예약 버튼
+
+### 3. 갤러리
+- 이미지 슬라이더 기능
+- 시술 전/후 사진 갤러리
+- 이전/다음 네비게이션 및 인디케이터
+
+### 4. 가격 안내
+- 서비스별 가격 카드 (커트, 염색, 펌)
+- 세부 항목 및 가격 정보
+- 애니메이션 효과
+
+### 5. 고객 후기
+- 리뷰 요약 칩 (이모지 기반)
+- 고객 후기 카드
+- 네이버 리뷰 연동 링크
+
+### 6. 네비게이션
+- 고정 네비게이션 바
+- 섹션별 스크롤 이동
+- 현재 섹션 하이라이트
+- 반응형 메뉴
+
+### 7. 인터랙티브 스크롤
+- 스냅 스크롤 기능
+- 섹션 단위 자동 이동
+- 부드러운 전환 애니메이션
+
+## 📁 프로젝트 구조
+
+```
+rose_hair_salon/
+├── app/
+│   ├── components/          # 재사용 가능한 컴포넌트
+│   │   ├── GallerySlider.tsx      # 갤러리 슬라이더
+│   │   ├── HeroPanel.tsx          # 히어로 섹션 패널
+│   │   ├── InfoItem.tsx           # 정보 아이템
+│   │   ├── NaverMap.tsx           # 네이버 지도 컴포넌트
+│   │   ├── NavigationBar.tsx      # 네비게이션 바
+│   │   ├── PriceCard.tsx          # 가격 카드
+│   │   ├── ReviewCard.tsx         # 후기 카드
+│   │   ├── ReviewChip.tsx         # 후기 칩
+│   │   └── SectionHeader.tsx      # 섹션 헤더
+│   ├── page.tsx            # 메인 페이지
+│   ├── layout.tsx          # 루트 레이아웃
+│   └── globals.css         # 전역 스타일
+├── public/                 # 정적 파일
+│   ├── *.jpg, *.png       # 이미지 파일들
+├── types/                  # TypeScript 타입 정의
+│   └── naver.d.ts         # 네이버 지도 타입
+├── next.config.ts         # Next.js 설정
+├── package.json           # 프로젝트 의존성
+└── tsconfig.json          # TypeScript 설정
+```
+
+## 🚀 시작하기
+
+### 사전 요구사항
+
+- Node.js 18 이상
+- npm, yarn, pnpm 또는 bun
+
+### 설치
+
+```bash
+# 의존성 설치
+npm install
+# 또는
+yarn install
+# 또는
+pnpm install
+```
+
+### 개발 서버 실행
 
 ```bash
 npm run dev
-# or
+# 또는
 yarn dev
-# or
+# 또는
 pnpm dev
-# or
+# 또는
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+브라우저에서 [http://localhost:3000](http://localhost:3000)을 열어 확인하세요.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 프로덕션 빌드
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## 📦 배포
 
-To learn more about Next.js, take a look at the following resources:
+이 프로젝트는 정적 사이트 생성(SSG)을 위해 설정되어 있습니다 (`output: "export"`). 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+주요 배포 옵션:
+- **Cloudflare Pages**: 정적 사이트 배포에 최적화
+- **Vercel**: Next.js 네이티브 지원
+- **GitHub Pages**: 무료 정적 호스팅
+- **Netlify**: 자동 빌드 및 배포
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 배포 시 주의사항
 
-## Deploy on Vercel
+- 이미지 최적화가 비활성화되어 있습니다 (`images.unoptimized: true`)
+- 정적 export를 사용하므로 서버 사이드 기능을 사용할 수 없습니다
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎨 주요 컴포넌트 설명
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### HeroPanel
+히어로 섹션의 개별 패널 컴포넌트. 호버 시 확대 효과와 부드러운 전환 애니메이션을 제공합니다.
+
+### NavigationBar
+스크롤 시 나타나는 고정 네비게이션 바. 현재 섹션을 자동으로 감지하여 하이라이트합니다.
+
+### GallerySlider
+이미지 슬라이더 컴포넌트. 이전/다음 버튼과 인디케이터를 제공합니다.
+
+### NaverMap
+네이버 지도 API를 사용하는 지도 컴포넌트. 미용실 위치를 표시합니다.
+
+### PriceCard
+가격 정보를 카드 형태로 표시하는 컴포넌트. 서비스 항목과 가격을 구조화하여 보여줍니다.
+
+## 🛣️ 향후 개선 사항
+
+- [ ] 예약 시스템 통합
+- [ ] 다국어 지원
+- [ ] 블로그/소식 섹션 추가
+- [ ] 온라인 상담 기능
+- [ ] 관리자 대시보드 (후기 관리)
+
+## 📝 라이선스
+
+이 프로젝트는 개인 포트폴리오 프로젝트입니다.
+
+## 📞 연락처
+
+**장미 미용실**
+- 주소: 경기도 성남시 분당구 장미로 101 1동 1113호
+- 전화: 0507-1415-4082
+- 영업시간: 평일/토요일 9:30 - 19:30 (매주 일요일 휴무)
+
+---
+
+© 2026 장미 미용실. All rights reserved.

@@ -45,12 +45,12 @@ export default function Home() {
       icon: MapPin,
       title: "위치",
       subtitle: "Location",
-      overlayBg: "bg-zinc-900",
-      gradientFrom: "from-zinc-/900/50",
+      overlayBg: "bg-black/90",
+      gradientFrom: "from-black/90",
       sectionId: "location",
       heightClasses: "h-[25vh] md:h-full",
       borderClasses:
-        "border-x md:border-x border-white/20 border-y md:border-y-0",
+        "border-x md:border-x border-white border-y md:border-y-0",
     },
     {
       index: 1,
@@ -59,12 +59,12 @@ export default function Home() {
       icon: Scissors,
       title: "사진",
       subtitle: "Image",
-      overlayBg: "bg-zinc-900",
-      gradientFrom: "from-zinc-/900/50",
+      overlayBg: "bg-black/90",
+      gradientFrom: "from-black/90",
       sectionId: "gallery",
       heightClasses: "h-[25vh] md:h-full",
       borderClasses:
-        "border-x md:border-x border-white/20 border-y md:border-y-0",
+        "border-x md:border-x border-white border-y md:border-y-0",
     },
     {
       index: 2,
@@ -73,12 +73,12 @@ export default function Home() {
       icon: DollarSign,
       title: "가격",
       subtitle: "Pricing",
-      overlayBg: "bg-zinc-900",
-      gradientFrom: "from-zinc-/900/50",
+      overlayBg: "bg-black/90",
+      gradientFrom: "from-black/90",
       sectionId: "pricing",
       heightClasses: "h-[25vh] md:h-full",
       borderClasses:
-        "border-x md:border-x border-white/20 border-y md:border-y-0",
+        "border-x md:border-x border-white border-y md:border-y-0",
     },
     {
       index: 3,
@@ -87,12 +87,12 @@ export default function Home() {
       icon: MessageSquare,
       title: "후기",
       subtitle: "Review",
-      overlayBg: "bg-zinc-900",
-      gradientFrom: "from-zinc-900/50",
+      overlayBg: "bg-black/90",
+      gradientFrom: "from-black/90",
       sectionId: "reviews",
       heightClasses: "h-[25vh] md:h-full",
       borderClasses:
-        "border-x md:border-x border-white/20 border-y md:border-y-0",
+        "border-x md:border-x border-white border-y md:border-y-0",
     },
   ];
 

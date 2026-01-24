@@ -85,20 +85,24 @@ export default function HeroPanel({
 
       {/* 오버레이 */}
       <motion.div
-        className={`absolute inset-0 ${overlayBg} flex items-center justify-center z-10`}
+        className={`absolute inset-0 ${overlayBg} z-10`}
         animate={{ opacity: overlayOpacity }}
         transition={{ duration: 0.5 }}
       >
-        <motion.div 
-          className="text-center text-white"
-          animate={{ opacity: textOpacity }}
-          transition={{ duration: 0.5 }}
-        >
-          <Icon className="w-16 h-16 mx-auto mb-4" />
-          <h2 className="text-4xl mb-2">{title}</h2>
-          <p className="text-lg opacity-80">{subtitle}</p>
-        </motion.div>
         <div className={`absolute inset-0 bg-gradient-to-br ${gradientFrom} to-transparent`} />
+      </motion.div>
+
+      {/* 텍스트와 아이콘 - 오버레이와 별도로 관리 */}
+      <motion.div 
+        className="absolute inset-0 flex items-center justify-center z-20 text-center text-white font-hero pointer-events-none"
+        animate={{ opacity: textOpacity }}
+        transition={{ duration: 0.5 }}
+      >
+        <div>
+          <Icon className="w-8 h-8 mx-auto mb-10 text-white" />
+          <h2 className="text-4xl md:text-5xl font-semibold tracking-wide mb-2 text-white">{title}</h2>
+          <p className="text-lg md:text-xl font-light tracking-widest uppercase text-white">{subtitle}</p>
+        </div>
       </motion.div>
     </motion.div>
   );

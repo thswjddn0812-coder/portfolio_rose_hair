@@ -46,10 +46,12 @@ export default function HeroPanel({
 }: HeroPanelProps) {
   const isHovered = hoveredSection === index;
   
-  // 모바일일 때는 이미지가 은은하게 보이도록, 데스크톱일 때는 호버 시에만 보이도록
-  const imageOpacity = isMobile ? 0.3 : isHovered ? 1 : 0;
-  // 모바일일 때는 오버레이를 약간 투명하게, 데스크톱일 때는 호버 시에만 숨김
-  const overlayOpacity = isMobile ? 0.7 : isHovered ? 0 : 1;
+  // 모든 패널 통일: 처음에는 이미지가 거의 검정색(은은하게) 보이다가 호버 시 선명하게 보이도록
+  const imageOpacity = isMobile ? 0.3 : isHovered ? 1 : 0.2;
+  // 오버레이는 호버 시 완전히 투명하게, 기본 상태에서는 진하게
+  const overlayOpacity = isMobile ? 0.7 : isHovered ? 0 : 0.85;
+  // 텍스트와 아이콘도 호버 시 완전히 사라지도록
+  const textOpacity = isMobile ? 1 : isHovered ? 0 : 1;
 
   return (
     <motion.div
@@ -64,7 +66,10 @@ export default function HeroPanel({
       {/* 배경 이미지 */}
       <motion.div
         className="absolute inset-0 z-0 overflow-hidden"
-        animate={{ opacity: imageOpacity }}
+        animate={{ 
+          opacity: imageOpacity,
+          filter: isHovered ? "brightness(1.1)" : "brightness(1)"
+        }}
         transition={{ duration: 0.5 }}
       >
         <Image
@@ -84,11 +89,15 @@ export default function HeroPanel({
         animate={{ opacity: overlayOpacity }}
         transition={{ duration: 0.5 }}
       >
-        <div className="text-center text-white">
+        <motion.div 
+          className="text-center text-white"
+          animate={{ opacity: textOpacity }}
+          transition={{ duration: 0.5 }}
+        >
           <Icon className="w-16 h-16 mx-auto mb-4" />
           <h2 className="text-4xl mb-2">{title}</h2>
           <p className="text-lg opacity-80">{subtitle}</p>
-        </div>
+        </motion.div>
         <div className={`absolute inset-0 bg-gradient-to-br ${gradientFrom} to-transparent`} />
       </motion.div>
     </motion.div>

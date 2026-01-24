@@ -14,6 +14,7 @@ import NaverMap from "./components/NaverMap";
 import HeroPanel from "./components/HeroPanel";
 import SectionHeader from "./components/SectionHeader";
 import PriceCard from "./components/PriceCard";
+import PricingCard from "./components/PricingCard";
 import GallerySlider from "./components/GallerySlider";
 import ReviewChip from "./components/ReviewChip";
 import ReviewCard from "./components/ReviewCard";
@@ -24,6 +25,8 @@ export default function Home() {
   const [hoveredSection, setHoveredSection] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [currentGalleryIndex, setCurrentGalleryIndex] = useState(0);
+  const [heroVisible, setHeroVisible] = useState(true);
+  const [selectedGender, setSelectedGender] = useState<"female" | "male">("female");
 
   const galleryImages = [
     "/model1.jpg",
@@ -42,8 +45,8 @@ export default function Home() {
       icon: MapPin,
       title: "위치",
       subtitle: "Location",
-      overlayBg: "bg-black",
-      gradientFrom: "from-black/50",
+      overlayBg: "bg-zinc-900",
+      gradientFrom: "from-zinc-/900/50",
       sectionId: "location",
       heightClasses: "h-[25vh] md:h-full",
       borderClasses:
@@ -56,8 +59,8 @@ export default function Home() {
       icon: Scissors,
       title: "사진",
       subtitle: "Image",
-      overlayBg: "bg-black",
-      gradientFrom: "from-black/50",
+      overlayBg: "bg-zinc-900",
+      gradientFrom: "from-zinc-/900/50",
       sectionId: "gallery",
       heightClasses: "h-[25vh] md:h-full",
       borderClasses:
@@ -65,13 +68,13 @@ export default function Home() {
     },
     {
       index: 2,
-      imageSrc: "/menus2.png",
+      imageSrc: "/price.png",
       imageAlt: "미용실 가격",
       icon: DollarSign,
       title: "가격",
       subtitle: "Pricing",
-      overlayBg: "bg-black",
-      gradientFrom: "from-black/50",
+      overlayBg: "bg-zinc-900",
+      gradientFrom: "from-zinc-/900/50",
       sectionId: "pricing",
       heightClasses: "h-[25vh] md:h-full",
       borderClasses:
@@ -79,7 +82,7 @@ export default function Home() {
     },
     {
       index: 3,
-      imageSrc: "/reviews.png",
+      imageSrc: "/placeHairsalon2.png",
       imageAlt: "미용실 후기",
       icon: MessageSquare,
       title: "후기",
@@ -120,6 +123,97 @@ export default function Home() {
     },
   ];
 
+  const pricingPlans = {
+    female: [
+      {
+        title: "커트",
+        subtitle: "여성 가격",
+        price: "₩19,000",
+        pricePerItem: "(커트 1회)",
+        features: [
+          "여성 커트 1회",
+          "기본 스타일링",
+          "무료 상담",
+          "7일 이내 예약 가능",
+        ],
+        buttonText: "예약하기",
+        isPopular: false,
+        delay: 0,
+      },
+      {
+        title: "염색",
+        subtitle: "여성 가격",
+        price: "₩45,000",
+        pricePerItem: "(염색)",
+        features: [
+          "전체 염색 1회",
+          "스타일링 포함",
+          "무료 상담",
+        ],
+        buttonText: "예약하기",
+        isPopular: true,
+        delay: 0.1,
+      },
+      {
+        title: "펌",
+        subtitle: "여성 가격",
+        price: "₩90,000",
+        pricePerItem: "(펌)",
+        features: [
+          "일반 펌 1회",
+          "스타일링 포함",
+        ],
+        buttonText: "예약하기",
+        isPopular: false,
+        delay: 0.2,
+      },
+    ],
+    male: [
+      {
+        title: "커트",
+        subtitle: "남성 가격",
+        price: "₩18,000",
+        pricePerItem: "(커트 1회)",
+        features: [
+          "남성 커트 1회",
+          "기본 스타일링",
+          "무료 상담",
+          "7일 이내 예약 가능",
+        ],
+        buttonText: "예약하기",
+        isPopular: false,
+        delay: 0,
+      },
+      {
+        title: "염색",
+        subtitle: "남성 가격",
+        price: "₩45,000",
+        pricePerItem: "(염색)",
+        features: [
+          "전체 염색 1회",
+          "스타일링 포함",
+          "무료 상담",
+        ],
+        buttonText: "예약하기",
+        isPopular: true,
+        delay: 0.1,
+      },
+      {
+        title: "펌",
+        subtitle: "남성 가격",
+        price: "₩50,000",
+        pricePerItem: "(펌)",
+        features: [
+          "일반 펌 1회",
+          "스타일링 포함",
+        ],
+        buttonText: "예약하기",
+        isPopular: false,
+        delay: 0.2,
+      },
+    ],
+  };
+
   const reviewChips = [
     { emoji: "😊", text: "친절해요", count: 32 },
     { emoji: "💚", text: "원하는 스타일로 잘해줘요", count: 20 },
@@ -156,121 +250,17 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const sections = ["hero", "location", "gallery", "pricing", "reviews"];
-    let isScrolling = false;
-    let scrollAccumulator = 0;
-    const scrollThreshold = 50; // 스크롤 임계값
-    let scrollTimeout: NodeJS.Timeout;
-
-    const getCurrentSectionIndex = () => {
-      const currentScroll = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const sections = document.querySelectorAll("section, #hero");
-
-      for (let i = 0; i < sections.length; i++) {
-        const section = sections[i] as HTMLElement;
-        const sectionTop = section.offsetTop;
-        const sectionBottom = sectionTop + section.offsetHeight;
-
-        if (
-          currentScroll >= sectionTop - windowHeight / 2 &&
-          currentScroll < sectionBottom - windowHeight / 2
-        ) {
-          return i;
-        }
-      }
-      return 0;
-    };
-
-    const scrollToSection = (index: number) => {
-      const targetSection = sections[index];
-      let targetElement: HTMLElement | null = null;
-
-      if (targetSection === "hero") {
-        targetElement = document.getElementById("hero");
-      } else {
-        targetElement = document.getElementById(targetSection);
-      }
-
-      if (targetElement) {
-        isScrolling = true;
-        const targetPosition = targetElement.offsetTop;
-        const startPosition = window.scrollY;
-        const distance = targetPosition - startPosition;
-        const duration = Math.min(Math.abs(distance) * 0.8, 1000); // 최대 1초
-        const startTime = performance.now();
-
-        const easeInOutCubic = (t: number): number => {
-          return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        };
-
-        const animateScroll = (currentTime: number) => {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const easedProgress = easeInOutCubic(progress);
-
-          window.scrollTo(0, startPosition + distance * easedProgress);
-
-          if (progress < 1) {
-            requestAnimationFrame(animateScroll);
-          } else {
-            isScrolling = false;
-            scrollAccumulator = 0;
-          }
-        };
-
-        requestAnimationFrame(animateScroll);
-
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          isScrolling = false;
-          scrollAccumulator = 0;
-        }, duration + 100);
-      }
-    };
-
-    const handleWheel = (e: WheelEvent) => {
-      if (isScrolling) {
-        e.preventDefault();
-        return;
-      }
-
-      // 스크롤 양 누적
-      scrollAccumulator += Math.abs(e.deltaY);
-
-      // 임계값 이상 스크롤했을 때만 섹션 이동
-      if (scrollAccumulator >= scrollThreshold) {
-        e.preventDefault();
-
-        const currentSectionIndex = getCurrentSectionIndex();
-        let nextSectionIndex = currentSectionIndex;
-
-        if (e.deltaY > 0) {
-          // 아래로 스크롤
-          nextSectionIndex = Math.min(
-            currentSectionIndex + 1,
-            sections.length - 1
-          );
-        } else {
-          // 위로 스크롤
-          nextSectionIndex = Math.max(currentSectionIndex - 1, 0);
-        }
-
-        // 같은 섹션이면 이동하지 않음
-        if (nextSectionIndex !== currentSectionIndex) {
-          scrollAccumulator = 0;
-          scrollToSection(nextSectionIndex);
-        }
-      }
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: false });
+    // 히어로 섹션이 보일 때는 스크롤 방지
+    if (heroVisible) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
 
     return () => {
-      window.removeEventListener("wheel", handleWheel);
-      clearTimeout(scrollTimeout);
+      document.body.style.overflow = "unset";
     };
-  }, []);
+  }, [heroVisible]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -299,41 +289,151 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* 네비게이션 바 */}
-      <NavigationBar onNavigate={scrollToSection} />
+    <>
+      {/* 히어로 섹션 - 완전히 별도로 관리 */}
+      {heroVisible && (
+        <div className="fixed inset-0 z-50 bg-black">
+          <div
+            className="h-screen flex flex-col md:flex-row overflow-hidden w-full"
+            id="hero"
+          >
+            {heroPanels.map((panel) => (
+              <HeroPanel
+                key={panel.index}
+                index={panel.index}
+                hoveredSection={hoveredSection}
+                isMobile={isMobile}
+                width={getWidth(panel.index)}
+                imageSrc={panel.imageSrc}
+                imageAlt={panel.imageAlt}
+                icon={panel.icon}
+                title={panel.title}
+                subtitle={panel.subtitle}
+                overlayBg={panel.overlayBg}
+                gradientFrom={panel.gradientFrom}
+                sectionId={panel.sectionId}
+                onMouseEnter={() => !isMobile && setHoveredSection(panel.index)}
+                onMouseLeave={() => !isMobile && setHoveredSection(null)}
+                onClick={() => {
+                  // 히어로 섹션을 숨기고 해당 섹션으로 스크롤
+                  setHeroVisible(false);
+                  setTimeout(() => {
+                    scrollToSection(panel.sectionId);
+                  }, 100);
+                }}
+                borderClasses={panel.borderClasses}
+                heightClasses={panel.heightClasses}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
-      {/* 히어로 섹션 - 4개의 인터랙티브 패널 */}
-      <div
-        className="h-screen flex flex-col md:flex-row overflow-hidden"
-        id="hero"
+      {/* 메인 페이지 컨텐츠 - 히어로 섹션이 숨겨진 후에만 표시 */}
+      {!heroVisible && (
+        <div className="min-h-screen bg-white">
+          {/* 네비게이션 바 */}
+          <NavigationBar onNavigate={scrollToSection} heroVisible={heroVisible} />
+
+      {/* 갤러리 섹션 */}
+      <section
+        id="gallery"
+        className="min-h-screen py-20 px-8 bg-zinc-50 pt-24 relative z-10"
       >
-        {heroPanels.map((panel) => (
-          <HeroPanel
-            key={panel.index}
-            index={panel.index}
-            hoveredSection={hoveredSection}
-            isMobile={isMobile}
-            width={getWidth(panel.index)}
-            imageSrc={panel.imageSrc}
-            imageAlt={panel.imageAlt}
-            icon={panel.icon}
-            title={panel.title}
-            subtitle={panel.subtitle}
-            overlayBg={panel.overlayBg}
-            gradientFrom={panel.gradientFrom}
-            sectionId={panel.sectionId}
-            onMouseEnter={() => !isMobile && setHoveredSection(panel.index)}
-            onMouseLeave={() => !isMobile && setHoveredSection(null)}
-            onClick={() => scrollToSection(panel.sectionId)}
-            borderClasses={panel.borderClasses}
-            heightClasses={panel.heightClasses}
-          />
-        ))}
-      </div>
+        <div className="max-w-7xl mx-auto">
+          <SectionHeader title="사진" />
 
+          <GallerySlider
+            images={galleryImages}
+            currentIndex={currentGalleryIndex}
+            onPrevious={handleGalleryPrevious}
+            onNext={handleGalleryNext}
+            onIndicatorClick={setCurrentGalleryIndex}
+          />
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            viewport={{ once: true }}
+            className="mt-12 text-center"
+          >
+            <p className="text-zinc-600 mb-6">
+              세련되고 모던한 인테리어의 편안한 공간에서 최상의 서비스를
+              경험하세요
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* 가격 섹션 */}
+      <section id="pricing" className="min-h-screen py-20 px-8 bg-white pt-24 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <SectionHeader title="가격 안내" />
+
+          {/* 성별 선택 탭 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="flex justify-center mb-12"
+          >
+            <div className="inline-flex bg-zinc-100 rounded-lg p-1 gap-2">
+              <button
+                onClick={() => setSelectedGender("female")}
+                className={`px-6 py-3 rounded-md font-medium transition-all duration-200 ${
+                  selectedGender === "female"
+                    ? "bg-pink-500 text-white shadow-md"
+                    : "text-zinc-600 hover:text-zinc-900"
+                }`}
+              >
+                여성
+              </button>
+              <button
+                onClick={() => setSelectedGender("male")}
+                className={`px-6 py-3 rounded-md font-medium transition-all duration-200 ${
+                  selectedGender === "male"
+                    ? "bg-blue-500 text-white shadow-md"
+                    : "text-zinc-600 hover:text-zinc-900"
+                }`}
+              >
+                남성
+              </button>
+            </div>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            {pricingPlans[selectedGender].map((plan) => (
+              <PricingCard
+                key={plan.title}
+                title={plan.title}
+                subtitle={plan.subtitle}
+                price={plan.price}
+                pricePerItem={plan.pricePerItem}
+                features={plan.features}
+                buttonText={plan.buttonText}
+                isPopular={plan.isPopular}
+                delay={plan.delay}
+                gender={selectedGender}
+              />
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="text-center text-zinc-600"
+          >
+            <p>* 가격은 모발 길이 및 상태에 따라 달라질 수 있습니다.</p>
+            <p className="mt-2">* 정확한 가격은 상담 후 안내해드립니다.</p>
+          </motion.div>
+        </div>
+      </section>
       {/* 위치 섹션 */}
-      <section id="location" className="min-h-screen py-20 px-8 bg-white pt-24">
+      <section id="location" className="min-h-screen py-20 px-8 bg-white pt-24 relative z-10">
         <div className="max-w-7xl mx-auto">
           <SectionHeader title="위치 및 정보" />
 
@@ -391,70 +491,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 갤러리 섹션 */}
-      <section
-        id="gallery"
-        className="min-h-screen py-20 px-8 bg-zinc-50 pt-24"
-      >
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader title="사진" />
-
-          <GallerySlider
-            images={galleryImages}
-            currentIndex={currentGalleryIndex}
-            onPrevious={handleGalleryPrevious}
-            onNext={handleGalleryNext}
-            onIndicatorClick={setCurrentGalleryIndex}
-          />
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            viewport={{ once: true }}
-            className="mt-12 text-center"
-          >
-            <p className="text-zinc-600 mb-6">
-              세련되고 모던한 인테리어의 편안한 공간에서 최상의 서비스를
-              경험하세요
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 가격 섹션 */}
-      <section id="pricing" className="min-h-screen py-20 px-8 bg-white pt-24">
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader title="가격 안내" />
-
-          <div className="space-y-6">
-            {priceData.map((price, index) => (
-              <PriceCard
-                key={price.title}
-                title={price.title}
-                items={price.items}
-                delay={price.delay || 0}
-              />
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="mt-12 text-center text-zinc-600"
-          >
-            <p>* 가격은 모발 길이 및 상태에 따라 달라질 수 있습니다.</p>
-            <p className="mt-2">* 정확한 가격은 상담 후 안내해드립니다.</p>
-          </motion.div>
-        </div>
-      </section>
-
       {/* 후기 섹션 */}
       <section
         id="reviews"
-        className="min-h-screen py-20 px-8 bg-zinc-50 pt-24"
+        className="min-h-screen py-20 px-8 bg-zinc-50 pt-24 relative z-10"
       >
         <div className="max-w-7xl mx-auto">
           <SectionHeader title="고객 후기" />
@@ -526,19 +566,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 푸터 */}
-      <footer className="bg-black text-white py-12 px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <h3 className="text-2xl mb-4">장미 미용실</h3>
-          <p className="text-zinc-400 mb-2">
-            경기도 성남시 분당구 장미로 101 1동 1113호
-          </p>
-          <p className="text-zinc-400 mb-4">TEL. 0507-1415-4082</p>
-          <p className="text-zinc-500 text-sm">
-            © 2026 장미 미용실. All rights reserved.
-          </p>
+          {/* 푸터 */}
+          <footer className="bg-black text-white py-12 px-8">
+            <div className="max-w-7xl mx-auto text-center">
+              <h3 className="text-2xl mb-4">장미 미용실</h3>
+              <p className="text-zinc-400 mb-2">
+                경기도 성남시 분당구 장미로 101 1동 1113호
+              </p>
+              <p className="text-zinc-400 mb-4">TEL. 0507-1415-4082</p>
+              <p className="text-zinc-500 text-sm">
+                © 2026 장미 미용실. All rights reserved.
+              </p>
+            </div>
+          </footer>
         </div>
-      </footer>
-    </div>
+      )}
+    </>
   );
 }

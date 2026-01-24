@@ -72,7 +72,7 @@ export default function NavigationBar({ onNavigate, heroVisible = false }: Navig
                 }}
               />
             </div>
-            <h1 className="text-base md:text-xl font-semibold text-white hidden sm:block">
+            <h1 className="text-lg sm:text-base md:text-xl font-semibold text-white">
               장미 미용실
             </h1>
           </div>

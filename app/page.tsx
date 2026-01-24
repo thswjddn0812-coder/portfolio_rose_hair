@@ -82,7 +82,7 @@ export default function Home() {
     },
     {
       index: 3,
-      imageSrc: "/placeHairsalon2.png",
+      imageSrc: "/reviews.png",
       imageAlt: "미용실 후기",
       icon: MessageSquare,
       title: "후기",

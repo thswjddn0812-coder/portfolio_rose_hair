@@ -29,12 +29,12 @@ export default function Home() {
   const [selectedGender, setSelectedGender] = useState<"female" | "male">("female");
 
   const galleryImages = [
-    "/model1.jpg",
-    "/model2.jpg",
-    "/model3.jpg",
-    "/model4.jpg",
-    "/model5.jpg",
-    "/model6.jpg",
+    "/img1.jpg",
+    "/img2.jpg",
+    "/img3.jpg",
+    "/img4.jpg",
+    "/img5.jpg",
+    "/img6.jpg",
   ];
 
   const heroPanels = [
@@ -107,17 +107,21 @@ export default function Home() {
     {
       title: "염색",
       items: [
-        { name: "전체 염색", price: "45,000원~" },
-        { name: "부분 염색", price: "25,000원~" },
-        { name: "탈색 + 염색", price: "90,000원~" },
+        { name: "새치커버", price: "45,000원" },
+        { name: "기본", price: "50,000원" },
+        { name: "기장추가", price: "+@원" },
       ],
       delay: 0.1,
     },
     {
       title: "펌",
       items: [
-        { name: "일반 펌", price: "50,000원~" },
-        { name: "+ 영양제", price: "+@원~" },
+        { name: "여자 펌 (기본)", price: "50,000원" },
+        { name: "여자 펌 A단계", price: "60,000원" },
+        { name: "여자 펌 B단계", price: "70,000원" },
+        { name: "헤나펌", price: "80,000원" },
+        { name: "남자 펌", price: "70,000원" },
+        { name: "다운펌", price: "40,000원" },
       ],
       delay: 0.2,
     },
@@ -142,13 +146,13 @@ export default function Home() {
       },
       {
         title: "염색",
-        subtitle: "여성 가격",
-        price: "₩45,000",
-        pricePerItem: "(염색)",
+        subtitle: "공통 가격",
+        price: "₩50,000",
+        pricePerItem: "(기본)",
         features: [
-          "전체 염색 1회",
-          "스타일링 포함",
-          "무료 상담",
+          "새치커버: 45,000원",
+          "기본: 50,000원",
+          "기장추가: +@원",
         ],
         buttonText: "예약하기",
         isPopular: true,
@@ -157,11 +161,13 @@ export default function Home() {
       {
         title: "펌",
         subtitle: "여성 가격",
-        price: "₩90,000",
-        pricePerItem: "(펌)",
+        price: "₩50,000",
+        pricePerItem: "(기본)",
         features: [
-          "일반 펌 1회",
-          "스타일링 포함",
+          "기본: 50,000원",
+          "A단계: 60,000원",
+          "B단계: 70,000원",
+          "헤나펌: 80,000원",
         ],
         buttonText: "예약하기",
         isPopular: false,
@@ -186,13 +192,14 @@ export default function Home() {
       },
       {
         title: "염색",
-        subtitle: "남성 가격",
-        price: "₩45,000",
-        pricePerItem: "(염색)",
+        subtitle: "공통 가격",
+        price: "₩50,000",
+        pricePerItem: "(기본)",
         features: [
-          "전체 염색 1회",
-          "스타일링 포함",
-          "무료 상담",
+          "염색+컷: 50,000원",
+          "새치커버: 45,000원",
+          "기본: 50,000원",
+          "기장추가: +@원",
         ],
         buttonText: "예약하기",
         isPopular: true,
@@ -201,11 +208,11 @@ export default function Home() {
       {
         title: "펌",
         subtitle: "남성 가격",
-        price: "₩50,000",
+        price: "₩70,000",
         pricePerItem: "(펌)",
         features: [
-          "일반 펌 1회",
-          "스타일링 포함",
+          "남자 펌: 70,000원",
+          "다운펌: 40,000원",
         ],
         buttonText: "예약하기",
         isPopular: false,
@@ -335,35 +342,39 @@ export default function Home() {
           {/* 네비게이션 바 */}
           <NavigationBar onNavigate={scrollToSection} heroVisible={heroVisible} />
 
-      {/* 갤러리 섹션 */}
+      {/* 갤러리 섹션 - 전광판 형태 전체 가로 */}
       <section
         id="gallery"
-        className="min-h-screen py-20 px-8 bg-zinc-50 pt-24 relative z-10"
+        className="py-20 px-8 bg-zinc-50 pt-24 relative z-10"
       >
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader title="사진" />
+        <div className="max-w-7xl mx-auto mb-8">
+          <SectionHeader title="" />
+        </div>  
 
+        {/* 전광판: 화면 전체 가로로 꽉 채움 */}
+        <div className="w-screen relative left-1/2 right-0 -translate-x-1/2">
           <GallerySlider
             images={galleryImages}
             currentIndex={currentGalleryIndex}
             onPrevious={handleGalleryPrevious}
             onNext={handleGalleryNext}
             onIndicatorClick={setCurrentGalleryIndex}
+            autoplayInterval={5000}
           />
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            viewport={{ once: true }}
-            className="mt-12 text-center"
-          >
-            <p className="text-zinc-600 mb-6">
-              세련되고 모던한 인테리어의 편안한 공간에서 최상의 서비스를
-              경험하세요
-            </p>
-          </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          viewport={{ once: true }}
+          className="max-w-7xl mx-auto mt-12 text-center"
+        >
+          <p className="text-zinc-600 mb-6">
+            세련되고 모던한 인테리어의 편안한 공간에서 최상의 서비스를
+            경험하세요
+          </p>
+        </motion.div>
       </section>
 
       {/* 가격 섹션 */}

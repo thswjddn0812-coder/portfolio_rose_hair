@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { MapPin, Scissors, DollarSign, MessageSquare } from "lucide-react";
+import { MapPin, DollarSign, MessageSquare } from "lucide-react";
 
 interface NavigationBarProps {
   onNavigate: (sectionId: string) => void;
@@ -24,7 +24,7 @@ export default function NavigationBar({ onNavigate, heroVisible = false }: Navig
       }
 
       // 현재 활성 섹션 감지
-      const sections = ["gallery", "pricing", "location", "reviews"];
+      const sections = ["pricing", "location", "reviews"];
       const scrollPosition = window.scrollY + 150;
 
       for (const sectionId of sections) {
@@ -48,7 +48,6 @@ export default function NavigationBar({ onNavigate, heroVisible = false }: Navig
 
   const navItems = [
     { id: "location", label: "위치", icon: MapPin },
-    { id: "gallery", label: "사진", icon: Scissors },
     { id: "pricing", label: "가격", icon: DollarSign },
     { id: "reviews", label: "후기", icon: MessageSquare },
   ];

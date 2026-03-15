@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   MapPin,
-  Scissors,
   DollarSign,
   Phone,
   Clock,
@@ -48,26 +47,12 @@ export default function Home() {
       overlayBg: "bg-black/90",
       gradientFrom: "from-black/90",
       sectionId: "location",
-      heightClasses: "h-[25vh] md:h-full",
+      heightClasses: "h-[33vh] md:h-full",
       borderClasses:
         "border-x md:border-x border-white border-y md:border-y-0",
     },
     {
       index: 1,
-      imageSrc: "/gallery2.png",
-      imageAlt: "미용실 갤러리",
-      icon: Scissors,
-      title: "사진",
-      subtitle: "Image",
-      overlayBg: "bg-black/90",
-      gradientFrom: "from-black/90",
-      sectionId: "gallery",
-      heightClasses: "h-[25vh] md:h-full",
-      borderClasses:
-        "border-x md:border-x border-white border-y md:border-y-0",
-    },
-    {
-      index: 2,
       imageSrc: "/price.png",
       imageAlt: "미용실 가격",
       icon: DollarSign,
@@ -76,12 +61,12 @@ export default function Home() {
       overlayBg: "bg-black/90",
       gradientFrom: "from-black/90",
       sectionId: "pricing",
-      heightClasses: "h-[25vh] md:h-full",
+      heightClasses: "h-[33vh] md:h-full",
       borderClasses:
         "border-x md:border-x border-white border-y md:border-y-0",
     },
     {
-      index: 3,
+      index: 2,
       imageSrc: "/reviews.png",
       imageAlt: "미용실 후기",
       icon: MessageSquare,
@@ -90,7 +75,7 @@ export default function Home() {
       overlayBg: "bg-black/90",
       gradientFrom: "from-black/90",
       sectionId: "reviews",
-      heightClasses: "h-[25vh] md:h-full",
+      heightClasses: "h-[33vh] md:h-full",
       borderClasses:
         "border-x md:border-x border-white border-y md:border-y-0",
     },
@@ -278,9 +263,9 @@ export default function Home() {
 
   const getWidth = (index: number) => {
     if (isMobile) return "100%";
-    if (hoveredSection === null) return "25%";
-    if (hoveredSection === index) return "40%";
-    return "20%";
+    if (hoveredSection === null) return "33.33%";
+    if (hoveredSection === index) return "50%";
+    return "25%";
   };
 
   const handleGalleryPrevious = () => {

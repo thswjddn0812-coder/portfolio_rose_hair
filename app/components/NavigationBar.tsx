@@ -61,16 +61,6 @@ export default function NavigationBar({ onNavigate, heroVisible = false }: Navig
         <div className="flex items-center justify-between h-14 md:h-16">
           {/* 로고/브랜드 */}
           <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10 md:w-12 md:h-12 flex-shrink-0 bg-black">
-              <img
-                src="/RoseHairROgo2.jpg"
-                alt="장미 미용실 로고"
-                className="w-full h-full object-contain"
-                style={{ 
-                  display: 'block',
-                }}
-              />
-            </div>
             <h1 className="text-lg sm:text-base md:text-xl font-semibold text-white">
               장미 미용실
             </h1>
@@ -92,7 +82,7 @@ export default function NavigationBar({ onNavigate, heroVisible = false }: Navig
                   }`}
                   aria-label={item.label}
                 >
-                  <Icon className="w-4 h-4 md:w-4 md:h-4 flex-shrink-0" />
+                  <Icon className="w-4 h-4 md:w-4 md:h-4 shrink-0" />
                   <span className="hidden md:inline text-sm font-medium">
                     {item.label}
                   </span>
